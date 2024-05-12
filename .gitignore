@@ -1,0 +1,4 @@
+.vscode
+db-data
+db-files/testQuery.sql
+app/back-end/vendor
