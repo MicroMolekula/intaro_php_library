@@ -12,6 +12,7 @@ use Library\Controllers\Main\TestController;
 $route->get('/hi/{test}', new IndexController);
 $route->post('/test', new TestController);
 
+$route->get('/', new IndexController);
 
 if(!$route->getStatus()){
     http_response_code(404);

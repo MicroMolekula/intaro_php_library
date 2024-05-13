@@ -14,12 +14,9 @@ class Route
         $this->status = false;
     }
 
-    public function get(string $url, Controller $controller)
-    {   
-        // #TODO Зарефакторить
-        // -----
-        $flagArg = false;
-        $arg = '';
+    // #TODO  Отрефакторить
+    private function checkArg(string $url) : string
+    {
         if(preg_match("/{\w+}/", $url, $matches) && count(explode('/', $url)) === count(explode('/', $this->url))) {
             $indexArg = array_search($matches[0], explode('/', $url));
             $flag = true;
@@ -30,15 +27,18 @@ class Route
                     }
                 }
             }
-            if(!$flag) {
-                return;
-            } else {
-                $flagArg = true;
+            if($flag) {
                 $arg = explode('/', $this->url)[$indexArg];
+                return $arg;
             }
         }
-        // ----- 
-        if((explode('?', $this->url)[0] === $url && $_SERVER['REQUEST_METHOD'] == 'GET') || $flagArg) {
+        return '';
+    }
+
+    public function get(string $url, Controller $controller)
+    {   
+        $arg = $this->checkArg($url);
+        if((explode('?', $this->url)[0] === $url || $arg)  && $_SERVER['REQUEST_METHOD'] == 'GET') {
             $request = $_GET;
             echo $controller($request, $arg);
             $this->status = true;
