@@ -16,36 +16,40 @@ class Route
 
     // #TODO  Отрефакторить
     private function checkArg(string $url) : string
-    {
-        if(preg_match("/{\w+}/", $url, $matches) && count(explode('/', $url)) === count(explode('/', $this->url))) {
-            $indexArg = array_search($matches[0], explode('/', $url));
+    {   
+        $urlU = explode('/', explode('?', $this->url)[0]);
+        $urlA = explode('/', $url);
+        if(preg_match("/{\w+}/", $url, $matches) && count($urlA) === count($urlU)) {
+            $indexArg = array_search($matches[0], $urlA);
             $flag = true;
-            for ($i = 0; $i < count(explode('/', $url)); $i++){
-                for ($j = 0; $j < count(explode('/', $this->url)); $j++){
-                    if($i === $j && explode('/', $url)[$i] !== explode('/', $this->url)[$j] && $j != $indexArg){
+            for ($i = 0; $i < count($urlA); $i++){
+                for ($j = 0; $j < count($urlU); $j++){
+                    if($i === $j && $urlA[$i] !== $urlU[$j] && $j != $indexArg){
                         $flag = false;
                     }
                 }
             }
             if($flag) {
-                $arg = explode('/', $this->url)[$indexArg];
+                $arg = $urlU[$indexArg];
                 return $arg;
             }
         }
         return '';
     }
 
-    public function get(string $url, Controller $controller)
+    public function get(string $url, Controller $controller) : void
     {   
         $arg = $this->checkArg($url);
-        if((explode('?', $this->url)[0] === $url || $arg)  && $_SERVER['REQUEST_METHOD'] == 'GET') {
+        if((explode('?', $this->url)[0] === $url || $arg)  
+            && $_SERVER['REQUEST_METHOD'] == 'GET') 
+        {
             $request = $_GET;
             echo $controller($request, $arg);
             $this->status = true;
         }
     }
 
-    public function post(string $url, Controller $controller)
+    public function post(string $url, Controller $controller) : void
     {
         if($this->url === $url && $_SERVER['REQUEST_METHOD'] == 'POST') {
             header('Content-Type: application/json; charset=UTF-8');
@@ -56,7 +60,7 @@ class Route
         }
     }
 
-    public function getStatus()
+    public function getStatus() : bool
     {
         return $this->status;
     }
