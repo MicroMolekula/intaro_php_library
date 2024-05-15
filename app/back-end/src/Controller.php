@@ -1,11 +1,9 @@
 <?php
 
 namespace Library\Core;
+use Library\Core\Model;
 
 class Controller
 {
-    function __construct()
-    {
-        
-    }
+    protected Model $model;
 }
