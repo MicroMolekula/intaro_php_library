@@ -44,7 +44,7 @@ class Route
             && $_SERVER['REQUEST_METHOD'] == 'GET') 
         {
             $request = $_GET;
-            echo $controller($request, $arg);
+            echo json_encode($controller($request, $arg));
             $this->status = true;
         }
     }
