@@ -9,10 +9,10 @@ $route = new Route();
 use Library\Controllers\Main\IndexController;
 use Library\Controllers\Main\TestController;
 
-$route->get('/hi', new IndexController);
-$route->post('/test', new TestController);
+$route->get('/hi', IndexController::class);
+$route->post('/test', TestController::class);
 
-$route->get('/', new IndexController);
+$route->get('/', IndexController::class);
 
 if(!$route->getStatus()){
     http_response_code(404);

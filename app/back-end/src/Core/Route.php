@@ -37,25 +37,25 @@ class Route
         return '';
     }
 
-    public function get(string $url, Controller $controller) : void
+    public function get(string $url, string $controller) : void
     {   
         $arg = $this->checkArg($url);
         if((explode('?', $this->url)[0] === $url || $arg)  
             && $_SERVER['REQUEST_METHOD'] == 'GET') 
         {
             $request = $_GET;
-            echo json_encode($controller($request, $arg));
+            echo json_encode((new $controller)($request, $arg));
             $this->status = true;
         }
     }
 
-    public function post(string $url, Controller $controller) : void
+    public function post(string $url, string $controller) : void
     {
         if($this->url === $url && $_SERVER['REQUEST_METHOD'] == 'POST') {
             header('Content-Type: application/json; charset=UTF-8');
             $json = file_get_contents('php://input');
             $request = json_decode($json, true);
-            echo json_encode($controller($request));
+            echo json_encode((new $controller)($request));
             $this->status = true;
         }
     }

@@ -30,6 +30,7 @@ CREATE TABLE author (
 );
 
 CREATE TABLE book_genre (
+    id SERIAL PRIMARY KEY,
     book_id BIGINT NOT NULL,
     genre_id BIGINT NOT NULL,
     FOREIGN KEY (book_id) 
@@ -39,6 +40,7 @@ CREATE TABLE book_genre (
 );
 
 CREATE TABLE book_author (
+    id SERIAL PRIMARY KEY,
     book_id BIGINT NOT NULL,
     author_id BIGINT NOT NULL,
     FOREIGN KEY (book_id)
@@ -48,6 +50,7 @@ CREATE TABLE book_author (
 );
 
 CREATE TABLE users_book (
+    id SERIAL PRIMARY KEY,
     users_id BIGINT NOT NULL,
     book_id BIGINT NOT NULL,
     last_read_date TIMESTAMP,
@@ -56,3 +59,4 @@ CREATE TABLE users_book (
     FOREIGN KEY (book_id)
         REFERENCES book (id)
 );
+

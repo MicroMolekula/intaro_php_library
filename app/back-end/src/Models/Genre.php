@@ -4,11 +4,11 @@ namespace Library\Models;
 
 use Library\Core\Model;
 
-class Book extends Model
+class Genre extends Model
 {
     public function __construct()
     {
-        $this->nameTable = 'book';
+        $this->nameTable = 'genre';
         parent::__construct();
     }
 }
