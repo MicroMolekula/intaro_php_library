@@ -8,7 +8,7 @@ class Route
     private string $url;
     private bool $status;
 
-    function __construct()
+    public function __construct()
     {
         $this->url = $_SERVER['REQUEST_URI'];
         $this->status = false;

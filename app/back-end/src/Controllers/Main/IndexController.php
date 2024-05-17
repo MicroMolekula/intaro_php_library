@@ -11,7 +11,7 @@ class IndexController extends Controller
     function __invoke($request, $arg)
     {
         $book = (new Book())->find(1);
-        var_dump($book);
+        //var_dump($book);
         return $book->toArray();
     }
 }
