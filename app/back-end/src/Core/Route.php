@@ -60,6 +60,15 @@ class Route
         }
     }
 
+    public function files(string $url, string $controller) : void
+    {
+        if($this->url === $url && $_SERVER['REQUEST_METHOD'] == 'POST') {
+            
+            echo json_encode((new $controller)());
+            $this->status = true;
+        }
+    }
+
     public function getStatus() : bool
     {
         return $this->status;

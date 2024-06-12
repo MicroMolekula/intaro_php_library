@@ -57,6 +57,16 @@ class Model
         return $result ? $result : null;
     }
 
+    public function findBy(string $type, string $value): Model | null
+    {
+        $sql = "SELECT * FROM {$this->nameTable} WHERE $type = :$type";
+        $query = $this->db->prepare($sql);
+        $query->bindParam(":$type", $value);
+        $query->execute();
+        $result = $query->fetchObject(static::class);
+        return $result ? $result : null;
+    }
+
     public function all(string $filters = null) : array | null
     {
         $sql = "SELECT * FROM {$this->nameTable}";
@@ -110,6 +120,7 @@ class Model
                 $query->bindParam(":id", $this->data['id']);
             }
         }
+        echo $query->queryString; 
         if ($query->execute()){
             return true;
         }
