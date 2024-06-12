@@ -10,7 +10,6 @@ class IndexController extends Controller
     function __invoke($request, $arg)
     {
         $book = (new Book())->find(1);
-        
         return $book->toArray();
     }
 }

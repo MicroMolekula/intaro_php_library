@@ -26,7 +26,7 @@ class Model
 
     public function __construct()
     {
-        $this->db = DB::getDB();
+        $this->db = (new DB())->getDB();
         if (!isset($this->data['id'])){
             $this->initData();
         }

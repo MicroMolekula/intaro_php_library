@@ -8,27 +8,44 @@ use Library\Core\Utility;
 
 class DB
 {
-    private static PDO $db;
+    private ?PDO $db;
 
-    public static function connect(string $config) : PDO | string
+    // public function connect() : PDO | string
+    // {
+    //     $settings = Utility::readConfig('.env');
+    //     try{
+    //         $this->db = new PDO(
+    //             "{$settings['DATABASE']}:host={$settings['DB_HOST']};
+    //             port={$settings['DB_PORT']};
+    //             dbname={$settings['DB_NAME']}",
+    //             $settings['DB_USER'],
+    //             $settings['DB_PASSWORD']
+    //         );
+    //         return $this->db;
+    //     } catch(PDOException $e) {
+    //         return $e->getMessage();
+    //     }
+    // }
+
+    public function __construct()
     {
-        $settings = Utility::readConfig($config);
+        $settings = Utility::readConfig('.env');
         try{
-            self::$db = new PDO(
+            $this->db = new PDO(
                 "{$settings['DATABASE']}:host={$settings['DB_HOST']};
                 port={$settings['DB_PORT']};
                 dbname={$settings['DB_NAME']}",
                 $settings['DB_USER'],
                 $settings['DB_PASSWORD']
             );
-            return self::$db;
         } catch(PDOException $e) {
-            return $e->getMessage();
-        }
+            $this->db = null;
+        };
+          
     }
 
-    public static function getDB() : PDO
+    public function getDB() : PDO
     {
-        return self::$db;
+        return $this->db;
     }
 }
